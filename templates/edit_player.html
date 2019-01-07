@@ -1,0 +1,20 @@
+
+{% block header %}
+  <h1>{% block title %}Edit {{ player['first_name'] }}{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="first_name">First name</label>
+    <input name="first_name" id="first_name" value = "{{player['first_name']}}" required >
+    <label for="last_name">Last name</label>
+    <input name="last_name" id="code" value = "{{player['second_name']}}">
+    <label for="squad_number">Squad number</label>
+    <input name="squad_number" id="short_name" value = "{{player['squad_number']}}">
+    <input type="submit" value="Save">
+  </form>
+  <hr>
+  <form action="{{ url_for('delete_player', id= player ['id']) }}" method="post">
+    <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+  </form>
+{% endblock %}

@@ -1,0 +1,20 @@
+
+{% block header %}
+  <h1>{% block title %}Edit {{ team['name'] }}{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="name">Name</label>
+    <input name="name" id="name"value = "{{team['name']}}" required >
+    <label for="code">Code</label>
+    <input name="code" id="code" value = "{{team['code']}}">
+    <label for="short_name">Short name</label>
+    <input name="short_name" id="short_name" value = "{{team['short_name']}}">
+    <input type="submit" value="Save">
+  </form>
+  <hr>
+  <form action="{{ url_for('delete', id= team [0]) }}" method="post">
+    <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+  </form>
+{% endblock %}

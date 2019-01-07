@@ -1,0 +1,17 @@
+
+
+{% block header %}
+  <h1>{% block title %}Add team{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="name">Name</label>
+    <input name="name" id="name" required><br>
+    <label for="code">Code</label>
+    <input name="code" id="code"><br>
+    <label for="short_name">Short name</label>
+    <input name="short_name" id="short_name"><br>
+    <input type="submit" value="Save">
+  </form>
+{% endblock %}

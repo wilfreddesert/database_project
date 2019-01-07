@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Fantasy App</title>
+		
+		<!-- css from w3 site for the table -->
+        <style>
+            table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            td, th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
+
+            tr:nth-child(even) {
+                background-color: #dddddd;
+            }
+
+            #nav {
+                text-align:center;
+                font-size:20px;
+                margin-left:10px;
+                link-style:none;
+            }
+
+            #nav a {
+                padding:1.2em;
+            }
+        </style>
+    </head>
+
+    <body>
+        <p>Fantasy Football League </p>
+        <div id = "nav">
+        <a href = "./">Go back</a>
+        </div>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Short name</th>
+                <th>Edit</th>
+            </tr>
+			<!-- loop through the users we passed in the app. -->
+            {% for role in roles %}
+                <tr>
+                    <td>{{role['id'] }}</td>
+                    <td>{{ role['singular_name'] }}</td>
+                    <td>{{ role['singular_name_short'] }}</td>
+                    <td><a class="action" href="{{ url_for('edit', id = role[0]) }}">Edit</a></td>
+                  </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>

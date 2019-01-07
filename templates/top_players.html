@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Top players</title>
+		
+		<!-- css from w3 site for the table -->
+        <style>
+            table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            td, th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
+
+            tr:nth-child(even) {
+                background-color: #dddddd;
+            }
+
+            #nav {
+                text-align:center;
+                font-size:20px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <p>Top League Players </p>
+        <div id = "nav">
+        <a href = "./teams">Go back</a>
+        </div>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Club</th>
+                <th>Position </th>
+                <th>Total Points</th>
+            </tr>
+			<!-- loop through the users we passed in the app. -->
+            {% for player in players %}
+                <tr>
+                    <td>{{player['web_name'] }}</td>
+                    <td>{{ player['club'] }}</td>
+                    <td>{{ player['position'] }}</td>
+                    <td>{{player['total_points']}}</td>
+                  </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>
