@@ -1,0 +1,21 @@
+
+
+{% block header %}
+  <h1>{% block title %}Search{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="first_name">First name</label>
+    <input name="first_name" id="first_name"  >
+    <label for="last_name">Last name</label>
+    <input name="last_name" id="last_name">
+    <label for="team">Team</label>
+    <input name="team" id="team">
+    <label for="min_points">Minimum Number of Points</label>
+    <input name="min_points" id="min_points">
+    <input type="submit" value="Save">
+  </form>
+
+  
+{% endblock %}

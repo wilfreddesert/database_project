@@ -208,6 +208,55 @@ group by p.team order by p.total_points DESC'''
     res = cur.execute(sql)
     return render_template("top_players.html", players = res)
 
+@app.route("/search",methods=('GET','POST'))
+def search():
+    if request.method == 'POST':
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        team = request.form['team']
+        min_points = request.form['min_points']
+        
+        return redirect(url_for('search_results', name = first_name, surname = last_name, club = team, threshold = min_points))
+    return render_template("search.html")
+
+@app.route("/search_results")
+def search_results():
+    first_name = request.args.get('name')
+    last_name = request.args.get('surname')
+    team = request.args.get('club')
+    min_points = request.args.get('threshold')
+    cur = get_db().cursor()
+    sql =  '''
+    select
+  p.first_name,
+  p.second_name,
+  t.name,
+  p.total_points
+from players p left join teams t on p.team = t.id '''
+    params = []
+
+    if last_name or first_name or team or min_points:
+        sql+= "where"
+
+    if last_name:
+        sql+= ''' p.second_name = ? '''
+        params+=[last_name]
+    if first_name:
+        add = " and p.first_name = ?" if len(params) > 0 else " p.first_name = ?"
+        sql+=add
+        params+=[first_name]
+    if team:
+        add = " and t.name = ?" if len(params) > 0 else " t.name = ?"
+        sql+=add
+        params+=[team]
+    if min_points:
+        add = " and p.total_points>=?" if len(params) > 0 else " p.total_points>=?"
+        sql+=add
+        params+=[min_points]
+    res = cur.execute(sql, params)
+    return render_template("search_results.html",results = res)
+
+
 @app.route("/top_from_club")
 def top_players_from_club():
     cur = get_db().cursor()

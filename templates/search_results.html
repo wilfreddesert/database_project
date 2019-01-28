@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Fantasy App</title>
+        <title>Search Results</title>
 		
 		<!-- css from w3 site for the table -->
         <style>
@@ -26,33 +26,27 @@
             #nav {
                 text-align:center;
                 font-size:20px;
-                margin-left:10px;
-                link-style:none;
-            }
-
-            #nav a {
-                padding:1.2em;
             }
         </style>
     </head>
 
     <body>
-        <p>Fantasy Football League </p>
         <div id = "nav">
-        <a href = "./">Go back</a>
         </div>
         <table>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Short name</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Team </th>
+                <th>Points</th>
             </tr>
 			<!-- loop through the users we passed in the app. -->
-            {% for role in roles %}
+            {% for result in results %}
                 <tr>
-                    <td>{{role['id'] }}</td>
-                    <td>{{ role['singular_name'] }}</td>
-                    <td>{{ role['singular_name_short'] }}</td>
+                    <td>{{result['first_name'] }}</td>
+                    <td>{{result['second_name'] }}</td>
+                    <td>{{result['name'] }}</td>
+                    <td>{{result['total_points']}}</td>
                   </tr>
             {% endfor %}
         </table>
