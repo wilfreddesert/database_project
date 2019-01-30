@@ -214,9 +214,10 @@ def search():
         first_name = request.form['first_name']
         last_name = request.form['last_name']
         team = request.form['team']
+        role = request.form['role']
         min_points = request.form['min_points']
         
-        return redirect(url_for('search_results', name = first_name, surname = last_name, club = team, threshold = min_points))
+        return redirect(url_for('search_results', name = first_name, surname = last_name, club = team, player_role = role,threshold = min_points))
     return render_template("search.html")
 
 @app.route("/search_results")
@@ -224,6 +225,7 @@ def search_results():
     first_name = request.args.get('name')
     last_name = request.args.get('surname')
     team = request.args.get('club')
+    role = request.args.get('player_role')
     min_points = request.args.get('threshold')
     cur = get_db().cursor()
     sql =  '''
@@ -231,24 +233,31 @@ def search_results():
   p.first_name,
   p.second_name,
   t.name,
+  r.singular_name_short,
   p.total_points
-from players p left join teams t on p.team = t.id '''
+from players p left join teams t on p.team = t.id left join roles r on p.element_type = r.id '''
     params = []
 
-    if last_name or first_name or team or min_points:
-        sql+= "where"
+    if last_name or first_name or team or role or min_points:
+        sql+= "where "
 
     if last_name:
-        sql+= ''' p.second_name = ? '''
-        params+=[last_name]
+        sql+= ''' p.second_name LIKE ? '''
+        params+=["%" + last_name + "%"]
     if first_name:
-        add = " and p.first_name = ?" if len(params) > 0 else " p.first_name = ?"
+        add = " and p.first_name LIKE ?" if len(params) > 0 else " p.first_name LIKE ?"
         sql+=add
-        params+=[first_name]
+        params+=["%" + first_name + "%"]
     if team:
-        add = " and t.name = ?" if len(params) > 0 else " t.name = ?"
+        add = " and t.name LIKE ?" if len(params) > 0 else " t.name LIKE ?"
         sql+=add
-        params+=[team]
+        params+=["%" + team + "%"]
+
+    if role:
+        add = " and r.singular_name_short = ?" if len(params) > 0 else " r.singular_name_short = ?"
+        sql+=add
+        params+=[role]
+
     if min_points:
         add = " and p.total_points>=?" if len(params) > 0 else " p.total_points>=?"
         sql+=add

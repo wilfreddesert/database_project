@@ -38,6 +38,7 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Team </th>
+                <th>Role</th>
                 <th>Points</th>
             </tr>
 			<!-- loop through the users we passed in the app. -->
@@ -46,6 +47,7 @@
                     <td>{{result['first_name'] }}</td>
                     <td>{{result['second_name'] }}</td>
                     <td>{{result['name'] }}</td>
+                    <td>{{result['singular_name_short'] }}</td>
                     <td>{{result['total_points']}}</td>
                   </tr>
             {% endfor %}
